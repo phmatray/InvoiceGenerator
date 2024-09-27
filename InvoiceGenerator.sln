@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Invoicex.CLI", "Invoicex.CLI\Invoicex.CLI.csproj", "{416E5734-1D8A-403D-B2EE-B58A9F53B48B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{416E5734-1D8A-403D-B2EE-B58A9F53B48B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{416E5734-1D8A-403D-B2EE-B58A9F53B48B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{416E5734-1D8A-403D-B2EE-B58A9F53B48B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{416E5734-1D8A-403D-B2EE-B58A9F53B48B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
