@@ -17,7 +17,15 @@ var invoiceData = new InvoiceData
     UserName = "John Doe",
     InvoiceNumber = "INV-12345",
     Date = DateTime.Now.ToString("yyyy-MM-dd"),
-    Amount = 250.50
+    DueDate = DateTime.Now.AddDays(30).ToString("yyyy-MM-dd"),
+    CompanyName = "Example Corp.",
+    CompanyAddress = "123 Business St, Business City, BC 12345",
+    CustomerAddress = "789 Customer Rd, Customer Town, CT 67890",
+    Items =
+    [
+        new InvoiceItem { Description = "Service A", UnitPrice = 100.00, Quantity = 2 },
+        new InvoiceItem { Description = "Product B", UnitPrice = 50.00, Quantity = 3 }
+    ]
 };
 
 // Path to pdflatex executable (update this with your actual path)
@@ -30,7 +38,7 @@ ILaTeXCompiler compiler = new LaTeXCompiler(pdflatexPath);
 try
 {
     // Step 1: Generate LaTeX file
-    string texFilePath = generator.GenerateLaTeX(invoiceData);
+    string texFilePath = generator.GenerateLaTeX(invoiceData, "InvoiceTemplate");
 
     // Step 2: Compile the LaTeX file to PDF
     await compiler.Compile(texFilePath, outputDirectory);

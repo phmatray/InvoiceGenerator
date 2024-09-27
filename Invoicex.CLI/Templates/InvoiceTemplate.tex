@@ -6,16 +6,53 @@
 
 % Packages
 \usepackage{amsmath}
+\usepackage{array}     % For better table formatting
+\usepackage{geometry}  % For adjusting page geometry
+\geometry{a4paper, margin=1in}  % Set margins
 
 % Document
 \begin{document}
 
-    \title{Invoice <<InvoiceNumber>>}
-    \author{<<UserName>>}
-    \date{<<Date>>}
+    % Company Information
+    \begin{flushright}
+        \textbf{<<CompanyName>>} \\
+        <<CompanyAddress>> \\
+    \end{flushright}
 
-    \maketitle
+    % Invoice Title
+    \begin{flushleft}
+        \textbf{Invoice Number:} <<InvoiceNumber>> \\
+        \textbf{Date:} <<Date>> \\
+        \textbf{Due Date:} <<DueDate>> \\
+    \end{flushleft}
 
-    Total amount due: <<Amount>> USD
+    \vspace{0.5cm}
+
+    % Customer Information
+    \begin{flushleft}
+        \textbf{Bill To:} \\
+        <<UserName>> \\
+        <<CustomerAddress>> \\
+    \end{flushleft}
+
+    \vspace{0.5cm}
+
+    % Invoice Table
+    \begin{tabular}{| >{\raggedright}p{8cm} | >{\raggedleft}p{2.5cm} | >{\raggedleft}p{2.5cm} | >{\raggedleft\arraybackslash}p{3cm} |}
+        \hline
+        \textbf{Description} & \textbf{Unit Price (USD)} & \textbf{Quantity} & \textbf{Total (USD)} \\
+        \hline
+        <<for each item in Items>>  % Start of item loop
+        <<item.Description>> & <<item.UnitPrice>> & <<item.Quantity>> & <<item.Total>> \\
+        <<end for>>  % End of item loop
+        \hline
+        \textbf{Total Amount} & & & \textbf{<<TotalAmount>> USD} \\
+        \hline
+    \end{tabular}
+
+    \vspace{1cm}
+
+    % Footer
+    \textbf{Thank you for your business!}
 
 \end{document}
