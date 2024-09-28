@@ -10,7 +10,7 @@ Directory.CreateDirectory(templateDirectory);
 Directory.CreateDirectory(outputDirectory);
 
 // Example data object to be used for generating the LaTeX file
-IInvoiceDataProvider invoiceDataProvider = new InvoiceDataProvider();
+IInvoiceDataProvider invoiceDataProvider = new InvoiceDataProviderFake();
 var invoiceData = invoiceDataProvider.GetInvoiceData();
 
 // Path to pdflatex executable (update this with your actual path)

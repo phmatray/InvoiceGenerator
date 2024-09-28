@@ -3,10 +3,10 @@ namespace Invoicex.CLI.Templates;
 public record InvoiceItem
 {
     public required string Description { get; init; }
-    public required double UnitPrice { get; init; }
+    public required decimal UnitPrice { get; init; }
     public required int Quantity { get; init; }
 
-    public double Total => UnitPrice * Quantity;
+    public decimal Total => UnitPrice * Quantity;
 }
 
 public record InvoiceData
@@ -20,5 +20,5 @@ public record InvoiceData
     public required string CustomerAddress { get; init; }
     public required List<InvoiceItem> Items { get; init; }
 
-    public double TotalAmount => Items.Sum(item => item.Total);
+    public decimal TotalAmount => Items.Sum(item => item.Total);
 }

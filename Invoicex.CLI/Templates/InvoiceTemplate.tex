@@ -8,29 +8,36 @@
 \usepackage{amsmath}
 \usepackage{array}     % For better table formatting
 \usepackage{geometry}  % For adjusting page geometry
+\usepackage{color}
+\usepackage{tabularx}  % For tables with justified columns
 \geometry{a4paper, margin=1in}  % Set margins
+
+% Define colors
+\definecolor{headercolor}{RGB}{60, 120, 216}   % Blue header color
+\definecolor{tableheader}{RGB}{230, 230, 230}  % Light gray for table headers
+\definecolor{tableborder}{RGB}{0, 0, 0}       % Black border color for table
 
 % Document
 \begin{document}
 
     % Company Information
     \begin{flushright}
-        \textbf{<<CompanyName>>} \\
-        <<CompanyAddress>> \\
+        \textbf{\textcolor{headercolor}{<<CompanyName>>}} \\
+        \textcolor{headercolor}{<<CompanyAddress>>} \\
     \end{flushright}
 
     % Invoice Title
     \begin{flushleft}
-        \textbf{Invoice Number:} <<InvoiceNumber>> \\
-        \textbf{Date:} <<Date>> \\
-        \textbf{Due Date:} <<DueDate>> \\
+        \textbf{\textcolor{headercolor}{Invoice Number:}} <<InvoiceNumber>> \\
+        \textbf{\textcolor{headercolor}{Date:}} <<Date>> \\
+        \textbf{\textcolor{headercolor}{Due Date:}} <<DueDate>> \\
     \end{flushleft}
 
     \vspace{0.5cm}
 
     % Customer Information
     \begin{flushleft}
-        \textbf{Bill To:} \\
+        \textbf{\textcolor{headercolor}{Bill To:}} \\
         <<UserName>> \\
         <<CustomerAddress>> \\
     \end{flushleft}
@@ -38,21 +45,25 @@
     \vspace{0.5cm}
 
     % Invoice Table
-    \begin{tabular}{| >{\raggedright}p{8cm} | >{\raggedleft}p{2.5cm} | >{\raggedleft}p{2.5cm} | >{\raggedleft\arraybackslash}p{3cm} |}
-        \hline
-        \textbf{Description} & \textbf{Unit Price (USD)} & \textbf{Quantity} & \textbf{Total (USD)} \\
-        \hline
-        <<for each item in Items>>  % Start of item loop
-        <<item.Description>> & <<item.UnitPrice>> & <<item.Quantity>> & <<item.Total>> \\
-        <<end for>>  % End of item loop
-        \hline
-        \textbf{Total Amount} & & & \textbf{<<TotalAmount>> USD} \\
-        \hline
-    \end{tabular}
+    \begin{flushleft}
+        \begin{tabularx}{\textwidth}{| >{\raggedright}X | >{\raggedleft}p{2.5cm} | >{\raggedleft}p{2.5cm} | >{\raggedleft\arraybackslash}p{3cm} |}
+            \hline
+            \textbf{Description} & \textbf{Unit Price (USD)} & \textbf{Quantity} & \textbf{Total (USD)} \\
+            \hline
+            <<for each item in Items>>  % Start of item loop
+            <<item.Description>> & <<item.UnitPrice>> & <<item.Quantity>> & <<item.Total>> \\
+            <<end for>>  % End of item loop
+            \hline
+            \textbf{Total Amount} & & & \textbf{<<TotalAmount>> USD} \\
+            \hline
+        \end{tabularx}
+    \end{flushleft}
 
     \vspace{1cm}
 
     % Footer
-    \textbf{Thank you for your business!}
+    \begin{flushright}
+        \textcolor{headercolor}{\textbf{Thank you for your business!}}
+    \end{flushright}
 
 \end{document}

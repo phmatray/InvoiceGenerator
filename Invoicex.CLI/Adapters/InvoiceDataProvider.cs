@@ -16,8 +16,8 @@ public class InvoiceDataProvider : IInvoiceDataProvider
             CustomerAddress = "789 Customer Rd, Customer Town, CT 67890",
             Items =
             [
-                new InvoiceItem { Description = "Service A", UnitPrice = 100.00, Quantity = 2 },
-                new InvoiceItem { Description = "Product B", UnitPrice = 50.00, Quantity = 3 }
+                new InvoiceItem { Description = "Service A", UnitPrice = 100.00m, Quantity = 2 },
+                new InvoiceItem { Description = "Product B", UnitPrice = 50.00m, Quantity = 3 }
             ]
         };
     }
