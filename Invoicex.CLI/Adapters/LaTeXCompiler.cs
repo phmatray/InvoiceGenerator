@@ -1,8 +1,10 @@
 using System.Diagnostics;
+using Microsoft.Extensions.Logging;
 
 namespace Invoicex.CLI.Adapters;
 
-public class LaTeXCompiler(string pdflatexPath) : ILaTeXCompiler
+public class LaTeXCompiler(ILogger<LaTeXCompiler> logger, string pdflatexPath)
+    : ILaTeXCompiler
 {
     public async Task Compile(string texFilePath, string outputDirectory)
     {
@@ -34,7 +36,7 @@ public class LaTeXCompiler(string pdflatexPath) : ILaTeXCompiler
             throw new Exception($"pdflatex failed with the following error: {error}");
         }
 
-        Console.WriteLine($"LaTeX compilation successful. Output PDF in {outputDirectory}");
+        logger.LogInformation("LaTeX compilation successful. Output PDF in {OutputDirectory}", outputDirectory);
     }
 }
 

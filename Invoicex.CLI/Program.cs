@@ -1,36 +1,41 @@
-﻿using Invoicex.CLI.Adapters;
+﻿using Invoicex.CLI;
+using Invoicex.CLI.Adapters;
+using Invoicex.CLI.Configuration;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
-// Define paths
-var currentDirectory = Directory.GetCurrentDirectory();
-var templateDirectory = Path.Combine(currentDirectory, "Templates");
-var outputDirectory = Path.Combine(currentDirectory, "..", "..", "..", "Output");
+HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
 
-// Ensure directories exist
-Directory.CreateDirectory(templateDirectory);
-Directory.CreateDirectory(outputDirectory);
+// Step 1: Load configuration from appsettings.json
+builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
-// Example data object to be used for generating the LaTeX file
-IInvoiceDataProvider invoiceDataProvider = new InvoiceDataProviderFake();
-var invoiceData = invoiceDataProvider.GetInvoiceData();
+// Step 2: Bind configuration to a settings object
+var latexSettings = builder.Configuration
+    .GetSection("LaTeXSettings")
+    .Get<LaTeXSettings>();
 
-// Path to pdflatex executable (update this with your actual path)
-const string pdflatexPath = "/Library/TeX/texbin/pdflatex"; // Example path for Linux, update for Windows
+// Step 3: Configure services
+builder.Services
+    .AddSingleton(latexSettings!)
+    .AddSingleton<IInvoiceDataProvider, InvoiceDataProviderFake>()
+    .AddSingleton<ILaTeXGenerator, LaTeXGenerator>(provider =>
+    {
+        var settings = provider.GetRequiredService<LaTeXSettings>();
+        string currentDirectory = Directory.GetCurrentDirectory();
+        string templateDirectory = Path.Combine(currentDirectory, settings.TemplateDirectory);
+        var logger = provider.GetRequiredService<ILogger<LaTeXGenerator>>();
+        return new LaTeXGenerator(logger, templateDirectory);
+    })
+    .AddSingleton<ILaTeXCompiler, LaTeXCompiler>(provider =>
+    {
+        var settings = provider.GetRequiredService<LaTeXSettings>();
+        var logger = provider.GetRequiredService<ILogger<LaTeXCompiler>>();
+        return new LaTeXCompiler(logger, settings.PdfLaTeXPath);
+    })
+    .AddHostedService<InvoiceProcessorService>();
 
-// Create instances of the adapters (in a real-world application, these would be injected)
-ILaTeXGenerator generator = new LaTeXGenerator(templateDirectory);
-ILaTeXCompiler compiler = new LaTeXCompiler(pdflatexPath);
+var app = builder.Build();
 
-try
-{
-    // Step 1: Generate LaTeX file
-    string texFilePath = generator.GenerateLaTeX(invoiceData, "InvoiceTemplate");
-
-    // Step 2: Compile the LaTeX file to PDF
-    await compiler.Compile(texFilePath, outputDirectory);
-
-    Console.WriteLine("PDF successfully generated.");
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"Error: {ex.Message}");
-}
+app.Run();

@@ -1,6 +1,9 @@
+using Microsoft.Extensions.Logging;
+
 namespace Invoicex.CLI.Adapters;
 
-public class LaTeXGenerator(string templateDirectory) : ILaTeXGenerator
+public class LaTeXGenerator(ILogger<LaTeXGenerator> logger, string templateDirectory)
+    : ILaTeXGenerator
 {
     public string GenerateLaTeX<T>(T dataObject, string templateName)
     {
@@ -22,7 +25,7 @@ public class LaTeXGenerator(string templateDirectory) : ILaTeXGenerator
         string outputFilePath = Path.Combine(templateDirectory, outputFileName);
         File.WriteAllText(outputFilePath, latexTemplate);
 
-        Console.WriteLine($"LaTeX file generated: {outputFilePath}");
+        logger.LogInformation("LaTeX file generated: {OutputFilePath}", outputFilePath);
 
         return outputFilePath;  // Returning the path to the generated LaTeX file
     }
