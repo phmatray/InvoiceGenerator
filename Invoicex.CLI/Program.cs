@@ -1,6 +1,4 @@
 ﻿using Invoicex.CLI.Adapters;
-using Invoicex.CLI.Ports;
-using Invoicex.CLI.Templates;
 
 // Define paths
 var currentDirectory = Directory.GetCurrentDirectory();
@@ -12,21 +10,8 @@ Directory.CreateDirectory(templateDirectory);
 Directory.CreateDirectory(outputDirectory);
 
 // Example data object to be used for generating the LaTeX file
-var invoiceData = new InvoiceData
-{
-    UserName = "John Doe",
-    InvoiceNumber = "INV-12345",
-    Date = DateTime.Now.ToString("yyyy-MM-dd"),
-    DueDate = DateTime.Now.AddDays(30).ToString("yyyy-MM-dd"),
-    CompanyName = "Example Corp.",
-    CompanyAddress = "123 Business St, Business City, BC 12345",
-    CustomerAddress = "789 Customer Rd, Customer Town, CT 67890",
-    Items =
-    [
-        new InvoiceItem { Description = "Service A", UnitPrice = 100.00, Quantity = 2 },
-        new InvoiceItem { Description = "Product B", UnitPrice = 50.00, Quantity = 3 }
-    ]
-};
+IInvoiceDataProvider invoiceDataProvider = new InvoiceDataProvider();
+var invoiceData = invoiceDataProvider.GetInvoiceData();
 
 // Path to pdflatex executable (update this with your actual path)
 const string pdflatexPath = "/Library/TeX/texbin/pdflatex"; // Example path for Linux, update for Windows

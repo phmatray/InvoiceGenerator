@@ -1,26 +1,24 @@
-using System.Collections;
-using System.Text;
-using Invoicex.CLI.Ports;
-
 namespace Invoicex.CLI.Adapters;
 
 public class LaTeXGenerator(string templateDirectory) : ILaTeXGenerator
 {
     public string GenerateLaTeX<T>(T dataObject, string templateName)
     {
-        string templatePath = Path.Combine(templateDirectory, $"{templateName}.tex");
-        if (!File.Exists(templatePath))
+        var template = new Template(templateDirectory, templateName);
+        
+        // string templatePath = Path.Combine(templateDirectory, $"{templateName}.tex");
+        if (!File.Exists(template.Path))
         {
-            throw new FileNotFoundException($"Template file not found at {templatePath}");
+            throw new FileNotFoundException($"Template file not found at {template.Path}");
         }
 
-        string latexTemplate = File.ReadAllText(templatePath);
+        string latexTemplate = File.ReadAllText(template.Path);
 
         // Process the template
         latexTemplate = ProcessTemplate(latexTemplate, dataObject);
 
         // Generate output file name
-        string outputFileName = $"{templateName.Replace("Template", string.Empty)}_{Guid.NewGuid()}.tex";
+        string outputFileName = template.OutputFileName;
         string outputFilePath = Path.Combine(templateDirectory, outputFileName);
         File.WriteAllText(outputFilePath, latexTemplate);
 
@@ -46,7 +44,7 @@ public class LaTeXGenerator(string templateDirectory) : ILaTeXGenerator
                     int endIdx = loopStart.IndexOf(">>", StringComparison.Ordinal);
                     string loopExpression = loopStart.Substring(startIdx, endIdx - startIdx).Trim();
                     // Expected format: item in CollectionName
-                    string[] parts = loopExpression.Split(new string[] { "in" }, StringSplitOptions.RemoveEmptyEntries);
+                    string[] parts = loopExpression.Split(["in"], StringSplitOptions.RemoveEmptyEntries);
                     if (parts.Length == 2)
                     {
                         string itemName = parts[0].Trim();
@@ -60,7 +58,7 @@ public class LaTeXGenerator(string templateDirectory) : ILaTeXGenerator
                         }
 
                         // Get collection from dataObject
-                        if (GetPropertyValue(dataObject, collectionName) is IEnumerable collection)
+                        if (dataObject.GetPropertyValue(collectionName) is IEnumerable collection)
                         {
                             foreach (var item in collection)
                             {
@@ -107,7 +105,7 @@ public class LaTeXGenerator(string templateDirectory) : ILaTeXGenerator
                 if (propertyPath.StartsWith(prefix + "."))
                 {
                     propertyPath = propertyPath.Substring(prefix.Length + 1);
-                    value = GetPropertyValue(dataObject, propertyPath);
+                    value = dataObject.GetPropertyValue(propertyPath);
                 }
                 else
                 {
@@ -118,7 +116,7 @@ public class LaTeXGenerator(string templateDirectory) : ILaTeXGenerator
             }
             else
             {
-                value = GetPropertyValue(dataObject, propertyPath);
+                value = dataObject.GetPropertyValue(propertyPath);
             }
 
             string replacement = value?.ToString() ?? string.Empty;
@@ -127,28 +125,5 @@ public class LaTeXGenerator(string templateDirectory) : ILaTeXGenerator
             idx += replacement.Length;
         }
         return template;
-    }
-
-    private object? GetPropertyValue(object? obj, string propertyPath)
-    {
-        if (obj == null || string.IsNullOrEmpty(propertyPath))
-            return null;
-
-        string[] properties = propertyPath.Split('.');
-
-        object? value = obj;
-        foreach (string prop in properties)
-        {
-            if (value == null)
-                return null;
-
-            var type = value.GetType();
-            var propertyInfo = type.GetProperty(prop);
-            if (propertyInfo == null)
-                return null;
-
-            value = propertyInfo.GetValue(value);
-        }
-        return value;
     }
 }
