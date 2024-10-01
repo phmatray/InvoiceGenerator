@@ -14,25 +14,25 @@ builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnC
 // Step 2: Bind configuration to a settings object
 var latexSettings = builder.Configuration
     .GetSection("LaTeXSettings")
-    .Get<LaTeXSettings>();
+    .Get<LatexSettings>();
 
 // Step 3: Configure services
 builder.Services
     .AddSingleton(latexSettings!)
     .AddSingleton<IInvoiceDataProvider, InvoiceDataProviderFake>()
-    .AddSingleton<ILaTeXGenerator, LaTeXGenerator>(provider =>
+    .AddSingleton<ILatexGenerator, LatexGenerator>(provider =>
     {
-        var settings = provider.GetRequiredService<LaTeXSettings>();
+        var settings = provider.GetRequiredService<LatexSettings>();
         string currentDirectory = Directory.GetCurrentDirectory();
         string templateDirectory = Path.Combine(currentDirectory, settings.TemplateDirectory);
-        var logger = provider.GetRequiredService<ILogger<LaTeXGenerator>>();
-        return new LaTeXGenerator(logger, templateDirectory);
+        var logger = provider.GetRequiredService<ILogger<LatexGenerator>>();
+        return new LatexGenerator(logger, templateDirectory);
     })
-    .AddSingleton<ILaTeXCompiler, LaTeXCompiler>(provider =>
+    .AddSingleton<ILatexCompiler, LatexCompiler>(provider =>
     {
-        var settings = provider.GetRequiredService<LaTeXSettings>();
-        var logger = provider.GetRequiredService<ILogger<LaTeXCompiler>>();
-        return new LaTeXCompiler(logger, settings.PdfLaTeXPath);
+        var settings = provider.GetRequiredService<LatexSettings>();
+        var logger = provider.GetRequiredService<ILogger<LatexCompiler>>();
+        return new LatexCompiler(logger, settings.PdfLaTeXPath);
     })
     .AddHostedService<InvoiceProcessorService>();
 

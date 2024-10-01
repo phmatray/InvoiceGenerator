@@ -1,24 +1,47 @@
 namespace Invoicex.CLI.Templates;
 
-public record InvoiceItem
+/// <summary>
+/// Represents an invoice item.
+/// </summary>
+/// <param name="Description">The description of the item.</param>
+/// <param name="UnitPrice">The unit price of the item.</param>
+/// <param name="Quantity">The quantity of the item.</param>
+public record InvoiceItem(
+    string Description,
+    decimal UnitPrice,
+    int Quantity)
 {
-    public required string Description { get; init; }
-    public required decimal UnitPrice { get; init; }
-    public required int Quantity { get; init; }
-
-    public decimal Total => UnitPrice * Quantity;
+    /// <summary>
+    /// Gets the total amount for the item.
+    /// </summary>
+    public decimal Total
+        => UnitPrice * Quantity;
 }
 
-public record InvoiceData
+/// <summary>
+/// Represents the invoice data.
+/// </summary>
+/// <param name="UserName">The username.</param>
+/// <param name="InvoiceNumber">The invoice number.</param>
+/// <param name="Date">The date of the invoice.</param>
+/// <param name="DueDate">The due date of the invoice.</param>
+/// <param name="CompanyName">The name of the company.</param>
+/// <param name="CompanyAddress">The address of the company.</param>
+/// <param name="CustomerAddress">The address of the customer.</param>
+/// <param name="Items">The items on the invoice.</param>
+public record InvoiceData(
+    string UserName,
+    string InvoiceNumber,
+    string Date,
+    string DueDate,
+    string CompanyName,
+    string CompanyAddress,
+    string CustomerAddress,
+    List<InvoiceItem> Items)
 {
-    public required string UserName { get; init; }
-    public required string InvoiceNumber { get; init; }
-    public required string Date { get; init; }
-    public required string DueDate { get; init; }
-    public required string CompanyName { get; init; }
-    public required string CompanyAddress { get; init; }
-    public required string CustomerAddress { get; init; }
-    public required List<InvoiceItem> Items { get; init; }
-
-    public decimal TotalAmount => Items.Sum(item => item.Total);
+    /// <summary>
+    /// Gets the total amount of the invoice.
+    /// </summary>
+    public decimal TotalAmount
+        => Items.Sum(item => item.Total);
 }

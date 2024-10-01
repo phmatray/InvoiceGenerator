@@ -4,14 +4,23 @@ using Microsoft.Extensions.Logging;
 
 namespace Invoicex.CLI;
 
+/// <summary>
+/// Represents the invoice processor service.
+/// </summary>
+/// <param name="invoiceDataProvider">The invoice data provider.</param>
+/// <param name="generator">The LaTeX generator.</param>
+/// <param name="compiler">The LaTeX compiler.</param>
+/// <param name="settings">The settings for LaTeX processing.</param>
+/// <param name="logger">The logger.</param>
 public class InvoiceProcessorService(
     IInvoiceDataProvider invoiceDataProvider,
-    ILaTeXGenerator generator,
-    ILaTeXCompiler compiler,
-    LaTeXSettings settings,
+    ILatexGenerator generator,
+    ILatexCompiler compiler,
+    LatexSettings settings,
     ILogger<InvoiceProcessorService> logger)
     : BackgroundService
 {
+    /// <inheritdoc />
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         try

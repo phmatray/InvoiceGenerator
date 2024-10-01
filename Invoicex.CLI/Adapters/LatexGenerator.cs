@@ -2,8 +2,8 @@ using Microsoft.Extensions.Logging;
 
 namespace Invoicex.CLI.Adapters;
 
-public class LaTeXGenerator(ILogger<LaTeXGenerator> logger, string templateDirectory)
-    : ILaTeXGenerator
+public class LatexGenerator(ILogger<LatexGenerator> logger, string templateDirectory)
+    : ILatexGenerator
 {
     public string GenerateLaTeX<T>(T dataObject, string templateName)
     {

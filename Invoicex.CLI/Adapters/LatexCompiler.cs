@@ -3,8 +3,8 @@ using Microsoft.Extensions.Logging;
 
 namespace Invoicex.CLI.Adapters;
 
-public class LaTeXCompiler(ILogger<LaTeXCompiler> logger, string pdflatexPath)
-    : ILaTeXCompiler
+public class LatexCompiler(ILogger<LatexCompiler> logger, string pdflatexPath)
+    : ILatexCompiler
 {
     public async Task Compile(string texFilePath, string outputDirectory)
     {

@@ -2,8 +2,14 @@ using Bogus;
 
 namespace Invoicex.CLI.Templates;
 
+/// <summary>
+/// Represents a fake invoice item.
+/// </summary>
 public sealed class InvoiceItemFaker : Faker<InvoiceItem>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="InvoiceItemFaker"/> class.
+    /// </summary>
     public InvoiceItemFaker()
     {
         RuleFor(x => x.Description, f => f.Commerce.ProductName());
@@ -12,8 +18,14 @@ public sealed class InvoiceItemFaker : Faker<InvoiceItem>
     }
 }
 
+/// <summary>
+/// Represents a fake invoice data.
+/// </summary>
 public sealed class InvoiceDataFaker : Faker<InvoiceData>
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="InvoiceDataFaker"/> class.
+    /// </summary>
     public InvoiceDataFaker()
     {
         RuleFor(x => x.UserName, f => f.Person.FullName);
@@ -26,7 +38,7 @@ public sealed class InvoiceDataFaker : Faker<InvoiceData>
         RuleFor(x => x.Items, f => GenerateItems(f.Random.Int(1, 5)));
     }
 
-    private List<InvoiceItem> GenerateItems(int count)
+    private static List<InvoiceItem> GenerateItems(int count)
     {
         var faker = new InvoiceItemFaker();
         return faker.Generate(count);
