@@ -3,14 +3,23 @@ namespace Invoicex.CLI.Templates;
 /// <summary>
 /// Represents an invoice item.
 /// </summary>
-/// <param name="Description">The description of the item.</param>
-/// <param name="UnitPrice">The unit price of the item.</param>
-/// <param name="Quantity">The quantity of the item.</param>
-public record InvoiceItem(
-    string Description,
-    decimal UnitPrice,
-    int Quantity)
+public record InvoiceItem
 {
+    /// <summary>
+    /// The description of the item.
+    /// </summary>
+    public required string Description { get; init; }
+
+    /// <summary>
+    /// The unit price of the item.
+    /// </summary>
+    public required decimal UnitPrice { get; init; }
+
+    /// <summary>
+    /// The quantity of the item.
+    /// </summary>
+    public int Quantity { get; init; } = 1;
+    
     /// <summary>
     /// Gets the total amount for the item.
     /// </summary>
@@ -21,24 +30,48 @@ public record InvoiceItem(
 /// <summary>
 /// Represents the invoice data.
 /// </summary>
-/// <param name="UserName">The username.</param>
-/// <param name="InvoiceNumber">The invoice number.</param>
-/// <param name="Date">The date of the invoice.</param>
-/// <param name="DueDate">The due date of the invoice.</param>
-/// <param name="CompanyName">The name of the company.</param>
-/// <param name="CompanyAddress">The address of the company.</param>
-/// <param name="CustomerAddress">The address of the customer.</param>
-/// <param name="Items">The items on the invoice.</param>
-public record InvoiceData(
-    string UserName,
-    string InvoiceNumber,
-    string Date,
-    string DueDate,
-    string CompanyName,
-    string CompanyAddress,
-    string CustomerAddress,
-    List<InvoiceItem> Items)
+public record InvoiceData
 {
+    /// <summary>
+    /// The username.
+    /// </summary>
+    public required string UserName { get; init; }
+
+    /// <summary>
+    /// The invoice number.
+    /// </summary>
+    public required string InvoiceNumber { get; init; }
+
+    /// <summary>
+    /// The date of the invoice.
+    /// </summary>
+    public required string Date { get; init; }
+
+    /// <summary>
+    /// The due date of the invoice.
+    /// </summary>
+    public required string DueDate { get; init; }
+
+    /// <summary>
+    /// The name of the company.
+    /// </summary>
+    public required string CompanyName { get; init; }
+
+    /// <summary>
+    /// The address of the company.
+    /// </summary>
+    public required string CompanyAddress { get; init; }
+
+    /// <summary>
+    /// The address of the customer.
+    /// </summary>
+    public required string CustomerAddress { get; init; }
+
+    /// <summary>
+    /// The items on the invoice.
+    /// </summary>
+    public List<InvoiceItem> Items { get; init; } = [];
+    
     /// <summary>
     /// Gets the total amount of the invoice.
     /// </summary>

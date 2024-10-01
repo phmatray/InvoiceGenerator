@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Output\" />
+    <Folder Include="_output\" />
   </ItemGroup>
 
   <ItemGroup>
