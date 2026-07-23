@@ -2,6 +2,20 @@
 
 # Invoicex
 
+<!-- portfolio-badges:start -->
+<!-- Identity -->
+[![phmatray - InvoiceGenerator](https://img.shields.io/static/v1?label=phmatray&message=InvoiceGenerator&color=blue&logo=github)](https://github.com/phmatray/InvoiceGenerator)
+![Top language](https://img.shields.io/github/languages/top/phmatray/InvoiceGenerator)
+[![Stars](https://img.shields.io/github/stars/phmatray/InvoiceGenerator?style=social)](https://github.com/phmatray/InvoiceGenerator/stargazers)
+[![Forks](https://img.shields.io/github/forks/phmatray/InvoiceGenerator?style=social)](https://github.com/phmatray/InvoiceGenerator/network/members)
+
+<!-- Activity -->
+[![Issues](https://img.shields.io/github/issues/phmatray/InvoiceGenerator)](https://github.com/phmatray/InvoiceGenerator/issues)
+[![Pull requests](https://img.shields.io/github/issues-pr/phmatray/InvoiceGenerator)](https://github.com/phmatray/InvoiceGenerator/pulls)
+[![Last commit](https://img.shields.io/github/last-commit/phmatray/InvoiceGenerator)](https://github.com/phmatray/InvoiceGenerator/commits)
+<!-- portfolio-badges:end -->
+
+
 Invoicex is a .NET 8.0-based application for generating PDF invoices using LaTeX. It leverages the power of LaTeX for creating professionally formatted invoices and uses .NET Core for data handling and business logic.
 
 ## Table of Contents
