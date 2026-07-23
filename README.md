@@ -135,6 +135,18 @@ Example `appsettings.json`:
 }
 ```
 
+<!-- portfolio-techstack:start -->
+
+## Tech Stack
+
+- **.NET 10**
+- Bogus
+- Microsoft.Extensions.Configuration
+- Microsoft.Extensions.DependencyInjection
+- Microsoft.Extensions.Hosting
+
+<!-- portfolio-techstack:end -->
+
 ## Contributing
 
 Contributions are welcome! Please follow these steps to contribute:
