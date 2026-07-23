@@ -1,3 +1,5 @@
+![InvoiceGenerator banner](.github/banner.png)
+
 # Invoicex
 
 Invoicex is a .NET 8.0-based application for generating PDF invoices using LaTeX. It leverages the power of LaTeX for creating professionally formatted invoices and uses .NET Core for data handling and business logic.
