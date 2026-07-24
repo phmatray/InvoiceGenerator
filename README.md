@@ -8,6 +8,7 @@
 ![Top language](https://img.shields.io/github/languages/top/phmatray/InvoiceGenerator)
 [![Stars](https://img.shields.io/github/stars/phmatray/InvoiceGenerator?style=social)](https://github.com/phmatray/InvoiceGenerator/stargazers)
 [![Forks](https://img.shields.io/github/forks/phmatray/InvoiceGenerator?style=social)](https://github.com/phmatray/InvoiceGenerator/network/members)
+[![License](https://img.shields.io/github/license/phmatray/InvoiceGenerator)](https://github.com/phmatray/InvoiceGenerator/blob/HEAD/LICENSE)
 
 <!-- Activity -->
 [![Issues](https://img.shields.io/github/issues/phmatray/InvoiceGenerator)](https://github.com/phmatray/InvoiceGenerator/issues)
